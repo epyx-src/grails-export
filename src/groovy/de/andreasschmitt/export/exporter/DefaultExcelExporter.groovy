@@ -9,6 +9,14 @@ import jxl.format.Colour
  */
 class DefaultExcelExporter extends AbstractExporter {
 
+	protected Object formatValue(Object domain, Object object, String field){
+		if(formatters?.containsKey(field)){
+			return formatters[field].call(domain, object, field)
+		}
+		
+		return object
+	}
+	
     protected void exportData(OutputStream outputStream, List data, List fields) throws ExportingException{
         try {
             def builder = new ExcelBuilder()
